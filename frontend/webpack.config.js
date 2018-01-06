@@ -30,7 +30,9 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? void 0 : {
-    app: './src/app/app.js'
+    app: './src/app/app.js',
+    ngmap: './node_modules/ngmap/build/scripts/ng-map.min.js'
+
   };
 
   /**
@@ -86,8 +88,8 @@ module.exports = function makeWebpackConfig() {
       // Transpile .js files using babel-loader
       // Compiles ES6 and ES7 into ES5 code
       test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
+      loader: 'babel-loader'
+      // exclude: /node_modules/
     }, {
       // CSS LOADER
       // Reference: https://github.com/webpack/css-loader

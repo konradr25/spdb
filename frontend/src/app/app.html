@@ -1,9 +1,20 @@
 <main>
-  <h1 class="title">Hello from Angular !</h1>
+  <div layout="column" class="zero">
+    <md-autocomplete
+            md-selected-item="app.selectedItem"
+            md-search-text-change="app.searchTextChange(app.searchText)"
+            md-search-text="app.searchText"
+            md-selected-item-change="app.selectedItemChange(item)"
+            md-items="app in app.querySearch(app.searchText)"
+            md-item-text="app.display"
+            md-min-length="0"
+            placeholder="Choose line?">
+    </md-autocomplete>
+  </div>
+
+  <ng-map center="[39.019444, 125.738056]"></ng-map>
+
 
   <!-- Images (and assets) are parsed and loaded from within the public directory -->
-  <img src="/img/logo.png">
+  <!--<img src="/img/logo.png">-->
 </main>
-<footer>
-  <a ng-href="{{app.url}}">Webpack Angular Starter</a>
-</footer>
