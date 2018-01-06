@@ -43,6 +43,20 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!--SWAGGER DEPENDS-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+
 		<!--OTHER DEPENDS-->
 		<dependency>
 			<groupId>com.google.guava</groupId>
