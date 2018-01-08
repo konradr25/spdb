@@ -1,29 +1,96 @@
 <!doctype html>
 <html ng-app="app" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Angular App</title>
-  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Angular App</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Angular Material style sheet -->
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="/libs/mdPickers.min.css">
 
-  <base href="/">
+    <script src="http://maps.google.com/maps/api/js"></script>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="/libs//mdPickers.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+    <base href="/">
 </head>
 <body>
-<script src="http://maps.google.com/maps/api/js"></script>
-<!-- Angular Material requires Angular.js Libraries -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
-<!-- Angular Material Library -->
-<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-<app>
+<body ng-app="app">
+<md-content flex ng-controller="mainController as app">
+    <main>
+        <md-toolbar class="md-whiteframe-z2">
+            <div style="text-align: center;">
+                <h1>Spdb</h1>
+                <h2>Delays by lines</h2>
+            </div>
+        </md-toolbar>
 
-</app>
+        <md-content flex layout="column" layout-align="center center" layout-padding>
+            <div layout="column">
+                <div layout-padding>
+                    <div layout="row">
+                        <div layout-padding>
+                            <h3>Choose line number</h3>
+                        </div>
+                        <div layout-padding>
+                            <md-autocomplete
+                                    md-selected-item="app.selectedItem"
+                                    md-search-text-change="app.searchTextChange(app.searchText)"
+                                    md-search-text="app.searchText"
+                                    md-selected-item-change="app.selectedItemChange(item)"
+                                    md-items="app in app.querySearch(app.searchText)"
+                                    md-item-text="app.display"
+                                    md-min-length="0"
+                                    placeholder="Choose line?">
+                            </md-autocomplete>
+                        </div>
+                    </div>
+                </div>
+
+                <div layout-padding>
+                    <div layout="row">
+                        <div layout-padding>
+                            <h3>Choose start</h3>
+                        </div>
+                        <div layout-padding>
+                            <mdp-time-picker ng-model="startDate"></mdp-time-picker>
+                        </div>
+                    </div>
+                </div>
+                <div layout-padding>
+                    <div layout="row">
+                        <div layout-padding>
+                            <h3>Choose stop</h3>
+                        </div>
+                        <div layout-padding>
+                            <mdp-time-picker ng-model="stopDate"></mdp-time-picker>
+                        </div>
+                    </div>
+                </div>
+                <div layout-padding>
+                    <md-button class="md-raised md-primary" ng-click="app.findDelays()">Find delays</md-button>
+                </div>
+            </div>
+
+        </md-content>
+        <ng-map center="[39.019444, 125.738056]"></ng-map>
+
+    </main>
+</md-content>
+
+</div>
+</body>
 </body>
 </html>
