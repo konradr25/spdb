@@ -19,7 +19,7 @@ public class DelaysController {
     @Autowired
     private DelaysService delaysService;
 
-    @GetMapping
+    @GetMapping("/lineName/{lineName}/start/{start}/stop/{stop}")
     public ResponseEntity<List<DelaysDTO>> countDelays(@PathVariable("lineName") String lineName,
                                                        @PathVariable(value = "start")
                                                        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime start,
