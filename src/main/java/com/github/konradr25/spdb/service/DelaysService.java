@@ -16,8 +16,8 @@ public class DelaysService {
     @Autowired
     private DelaysRepository delaysRepository;
 
-    public List<DelaysDTO> countDelays(String lineName, LocalDateTime start, LocalDateTime stop) {
-        List<DelaysQueryResult> delaysQueryResults = delaysRepository.countDelays(lineName, start.toLocalTime(), stop.toLocalTime());
+    public List<DelaysDTO> countDelays(String lineName, String start, String stop) {
+        List<DelaysQueryResult> delaysQueryResults = delaysRepository.countDelays(lineName, start, stop);
         return mapToDelaysDTO(delaysQueryResults);
     }
 

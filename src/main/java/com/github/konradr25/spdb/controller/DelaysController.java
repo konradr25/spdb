@@ -21,10 +21,8 @@ public class DelaysController {
 
     @GetMapping("/lineName/{lineName}/start/{start}/stop/{stop}")
     public ResponseEntity<List<DelaysDTO>> countDelays(@PathVariable("lineName") String lineName,
-                                                       @PathVariable(value = "start")
-                                                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime start,
-                                                       @PathVariable(value = "stop")
-                                                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime stop) {
+                                                       @PathVariable(value = "start") String start,
+                                                       @PathVariable(value = "stop") String stop) {
         return ResponseEntity.ok(delaysService.countDelays(lineName, start, stop));
     }
 }
