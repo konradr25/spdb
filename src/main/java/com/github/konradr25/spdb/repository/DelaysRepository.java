@@ -35,15 +35,15 @@ public class DelaysRepository {
             "      JOIN csipdaystopping daystop ON line.loid = daystop.line_loid\n" +
             "      JOIN csipstoppoint stop ON daystop.stoppoint_loid = stop.loid\n" +
             "    WHERE\n" +
-            "      line.name = :Line\n" +
+            "      line.name = ?\n" +
             "      AND (timezone('CET', daystop.realdeparture) - date_trunc('day', daystop.realdeparture))\n" +
-            "      BETWEEN to_timestamp(:Start, 'YYYY-MM-DD HH24:MI:SS') -\n" +
+            "      BETWEEN to_timestamp(?, 'Mon DD YYYY HH24:MI:SS') -\n" +
             "                     date_trunc('day',\n" +
-            "                         to_timestamp(:Start, 'YYYY-MM-DD HH24:MI:SS'\n" +
+            "                         to_timestamp(?, 'Mon DD YYYY HH24:MI:SS'\n" +
             "                         ))::TIMESTAMP\n" +
-            "      AND to_timestamp(:End, 'YYYY-MM-DD HH24:MI:SS') -\n" +
+            "      AND to_timestamp(?, 'Mon DD YYYY HH24:MI:SS') -\n" +
             "                     date_trunc('day',\n" +
-            "                     to_timestamp(:End, 'YYYY-MM-DD HH24:MI:SS'\n" +
+            "                     to_timestamp(?, 'Mon DD YYYY HH24:MI:SS'\n" +
             "                     ))\n" +
             "      AND daystop.realdeparture IS NOT NULL\n" +
             "    ORDER BY\n" +
@@ -53,19 +53,23 @@ public class DelaysRepository {
             "SELECT\n" +
             "  end_latitude,\n" +
             "  end_longitude,\n" +
-            "  avg(delay_on_section) delay\n" +
+            "  avg(delay_on_section) delay_on_section\n" +
             "FROM Delay_per_course\n" +
             "WHERE start_stopId IS NOT NULL\n" +
             "GROUP BY   end_latitude, end_longitude";
 
     public List<DelaysQueryResult> countDelays(String lineName, String start, String stop) {
-        return jdbcTemplate.query(GET_DELAYS_QUERY, new Object[]{lineName, start, stop}, getRowMapper());
+
+        start = start.substring(4, 24);
+        stop = stop.substring(4, 24);
+        return jdbcTemplate.query(GET_DELAYS_QUERY, new Object[]{lineName, start, start, stop, stop}, getRowMapper());
     }
 
     private RowMapper<DelaysQueryResult> getRowMapper() {
         return (resultSet, i) -> DelaysQueryResult.builder()
                 .sectionDelay(resultSet.getDouble("delay_on_section"))
-                .totalDelay(resultSet.getDouble("total_delay"))
+                .stopLatitude(resultSet.getLong("end_latitude"))
+                .stopLongitude(resultSet.getLong("end_longitude"))
                 //TODO
                 .build();
     }

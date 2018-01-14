@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DelaysQueryResult {
-    private long startStopId;
-    private long stopStopId;
-    private double totalDelay;
+    private long stopLatitude;
+    private long stopLongitude;
     private double sectionDelay;
 }
