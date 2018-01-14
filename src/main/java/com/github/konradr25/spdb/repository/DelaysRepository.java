@@ -68,8 +68,8 @@ public class DelaysRepository {
     private RowMapper<DelaysQueryResult> getRowMapper() {
         return (resultSet, i) -> DelaysQueryResult.builder()
                 .sectionDelay(resultSet.getDouble("delay_on_section"))
-                .stopLatitude(resultSet.getLong("end_latitude"))
-                .stopLongitude(resultSet.getLong("end_longitude"))
+                .stopLatitude(resultSet.getDouble("end_latitude"))
+                .stopLongitude(resultSet.getDouble("end_longitude"))
                 //TODO
                 .build();
     }
