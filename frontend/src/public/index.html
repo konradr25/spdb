@@ -36,7 +36,7 @@
         <md-toolbar class="md-whiteframe-z2">
             <div style="text-align: center;">
                 <h1>Spdb</h1>
-                <h2>Delays by lines</h2>
+                <h2>Delays by lines{{selectedPoints}}</h2>
             </div>
         </md-toolbar>
 
@@ -53,10 +53,14 @@
                                     md-search-text-change="searchTextChange(searchText)"
                                     md-search-text="searchText"
                                     md-selected-item-change="selectedItemChange(item)"
-                                    md-items="app in querySearch(searchText)"
-                                    md-item-text="display"
+                                    md-items="item in querySearch(searchText)"
+                                    md-item-text="item.display"
                                     md-min-length="0"
                                     placeholder="Choose line?">
+
+                                <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                </md-item-template>
                             </md-autocomplete>
                         </div>
                     </div>
@@ -88,7 +92,7 @@
             </div>
 
         </md-content>
-        <ng-map default-style="false" style="height: 800px; display:block;" center="[37.774546, -122.433523]">
+        <ng-map default-style="false" style="height: 800px; display:block;" center="[53.139282, 23.106817999999976]">
             <heatmap-layer  id="foo" data="selectedPoints"></heatmap-layer>
         </ng-map>
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping("/delays")
 public class DelaysController {
     @Autowired
