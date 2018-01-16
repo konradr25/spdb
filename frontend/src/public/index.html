@@ -36,7 +36,7 @@
         <md-toolbar class="md-whiteframe-z2">
             <div style="text-align: center;">
                 <h1>Spdb</h1>
-                <h2>Delays by lines{{selectedPoints}}</h2>
+                <h2>Delays by lines</h2>
             </div>
         </md-toolbar>
 
@@ -92,7 +92,7 @@
             </div>
 
         </md-content>
-        <ng-map default-style="false" style="height: 800px; display:block;" center="[53.139282, 23.106817999999976]">
+        <ng-map id="map" default-style="false" style="height: 800px; display:block;" center="[53.139282, 23.106817999999976]">
             <heatmap-layer  id="foo" data="selectedPoints"></heatmap-layer>
         </ng-map>
 

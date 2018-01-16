@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,11 +21,12 @@ public class DelaysService {
     }
 
     private List<DelaysDTO> mapToDelaysDTO(List<DelaysQueryResult> delaysQueryResults) {
-        // TODO check x -> Latitude, y -> Longitude
+        double lowestValue = Math.abs(delaysQueryResults.stream().map(DelaysQueryResult::getSectionDelay).min(Double::compareTo)
+        .orElse(0.0));
         return delaysQueryResults.stream().map(delaysQueryResult -> new DelaysDTO(
                 Double.toString(delaysQueryResult.getStopLatitude()),
                 Double.toString(delaysQueryResult.getStopLongitude()),
-                (long) delaysQueryResult.getSectionDelay()
+                delaysQueryResult.getSectionDelay() + lowestValue
                 )).collect(Collectors.toList());
     }
 }

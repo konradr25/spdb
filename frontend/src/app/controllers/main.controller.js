@@ -24,13 +24,27 @@ function MainController(mainService, scope) {
         });
     };
 
+    var reinitializeMap = function() {
+        scope.heatmap.setMap(null);
+        scope.map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: {lat: 53.139282, lng: 23.1068179999}
+        });
+    }
+
+    var updateHeatmapWithPoints = function(DelaysDTOs) {
+        scope.selectedPoints = createPoints(DelaysDTOs);
+        scope.heatmap = new google.maps.visualization.HeatmapLayer({
+            data: scope.selectedPoints,
+            map: scope.map,
+            radius: 30
+        });
+    }
+
     scope.findDelays = function () {
-        mainService.loadDelays(scope.chosenLine.value, scope.startDate, scope.stopDate, function (res) {
-            scope.selectedPoints = createPoints(res);
-            scope.heatmap = new google.maps.visualization.HeatmapLayer({
-                data: scope.selectedPoints,
-                map: scope.map
-            });
+        mainService.loadDelays(scope.chosenLine.value, scope.startDate, scope.stopDate, function (DelaysDTOs) {
+            reinitializeMap();
+            updateHeatmapWithPoints(DelaysDTOs);
         })
     };
 
@@ -53,7 +67,7 @@ function MainController(mainService, scope) {
 
     var createPoints = function (allDelaysDTOs) {
         return allDelaysDTOs.map(function (delayDTO) {
-            return new google.maps.LatLng(delayDTO.x, delayDTO.y);
+            return {location: new google.maps.LatLng(delayDTO.x, delayDTO.y), weight: delayDTO.delay}
         });
 
     };

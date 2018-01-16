@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class DelaysDTO {
     private String x;
     private String y;
-    private Long delay;
+    private Double delay;
 }
