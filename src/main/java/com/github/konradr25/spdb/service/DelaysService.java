@@ -21,12 +21,24 @@ public class DelaysService {
     }
 
     private List<DelaysDTO> mapToDelaysDTO(List<DelaysQueryResult> delaysQueryResults) {
-        double lowestValue = Math.abs(delaysQueryResults.stream().map(DelaysQueryResult::getSectionDelay).min(Double::compareTo)
-        .orElse(0.0));
         return delaysQueryResults.stream().map(delaysQueryResult -> new DelaysDTO(
                 Double.toString(delaysQueryResult.getStopLatitude()),
                 Double.toString(delaysQueryResult.getStopLongitude()),
-                delaysQueryResult.getSectionDelay() + lowestValue
+                getSectionDelay(delaysQueryResult.getSectionDelay())
                 )).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets section delay. If delay is negative it is replaced with 1.
+     *
+     * @param sectionDelay
+     * @return delay
+     */
+    private double getSectionDelay(double sectionDelay) {
+        if (sectionDelay <= 1) {
+            return 1;
+        } else {
+            return sectionDelay;
+        }
     }
 }
